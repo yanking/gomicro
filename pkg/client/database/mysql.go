@@ -1,3 +1,4 @@
+// Package database provides support for multiple database instances including MySQL and Redis.
 package database
 
 import (
@@ -134,7 +135,7 @@ func GetMySQLInstances() []string {
 }
 
 // CloseMySQL 关闭指定的MySQL实例连接
-func CloseMySQL(ctx context.Context, instances ...string) error {
+func CloseMySQL(_ context.Context, instances ...string) error {
 	mu.Lock()
 	defer mu.Unlock()
 

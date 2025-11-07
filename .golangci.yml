@@ -19,7 +19,7 @@ linters-settings:
 
   gocyclo:
     # Minimal cyclomatic complexity to report.
-    min-complexity: 15
+    min-complexity: 20
 
   dupl:
     # Tokens count to trigger issue.

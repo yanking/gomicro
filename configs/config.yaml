@@ -16,3 +16,22 @@ mysql:
     maxIdleConnections: 5
     maxOpenConnections: 50
     maxConnectionLifeTime: "15m"
+
+# redis
+redis:
+  - instance: "default"
+    addrs:
+      - "localhost:6379"
+    db: 0
+    username: ""
+    password: ""
+    poolSize: 10
+    minIdleConns: 5
+  - instance: "cache"
+    addrs:
+      - "localhost:6380"
+    db: 1
+    username: ""
+    password: ""
+    poolSize: 20
+    minIdleConns: 10

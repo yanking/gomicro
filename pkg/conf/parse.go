@@ -108,7 +108,7 @@ func Parse(configFile string, obj any, reloads ...func()) error {
 func watchConfig(v *viper.Viper, obj any, reloads ...func()) {
 	v.WatchConfig()
 
-	v.OnConfigChange(func(e fsnotify.Event) {
+	v.OnConfigChange(func(_ fsnotify.Event) {
 		mu.Lock()
 		err := v.Unmarshal(obj)
 		mu.Unlock()
