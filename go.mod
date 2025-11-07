@@ -1,4 +1,4 @@
-module gomicro
+module github.com/yanking/gomicro
 
 go 1.25
 

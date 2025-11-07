@@ -73,13 +73,6 @@ linters:
     - prealloc      # Finds slice declarations that could potentially be preallocated.
     - dupl          # Tool for code clone detection.
 
-  # Disable specific linter
-  disable:
-    - deadcode      # Finds unused code. Deprecated, replaced by unused.
-    - structcheck   # Finds unused struct fields. Deprecated, replaced by unused.
-    - varcheck      # Finds unused global variables and constants. Deprecated, replaced by unused.
-    - scopelint     # Scopelint checks for unpinned variables in go programs. Deprecated, replaced by exportloopref.
-
 issues:
   # Maximum count of issues to exit with non-zero code.
   max-issues-per-linter: 0
