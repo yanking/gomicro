@@ -24,6 +24,13 @@ if [[ -z "$STAGED_FILES" ]]; then
     exit 0
 fi
 
+# Run gofmt on staged files
+echo "Formatting staged files..."
+echo "$STAGED_FILES" | xargs -r gofmt -w
+
+# Add formatted files back to staging area
+echo "$STAGED_FILES" | xargs -r git add
+
 echo "Linting staged files..."
 # Run golangci-lint on staged files
 golangci-lint run

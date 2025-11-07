@@ -4,24 +4,41 @@ package middlewares
 
 import (
 	"bytes"
-	"fmt"
+	"context"
 	"io"
 	"log/slog"
 	"time"
 
 	"github.com/gin-gonic/gin"
+	"github.com/google/uuid"
+	"github.com/yanking/gomicro/pkg/constants"
+)
+
+// RequestContextKey 定义request_id在context中的键类型
+type RequestContextKey string
+
+const (
+	// RequestIDKey 是request_id在context中的键
+	RequestIDKey RequestContextKey = "request_id"
 )
 
 // Context 创建一个上下文中间件，用于日志记录和请求追踪
 func Context(logger *slog.Logger) gin.HandlerFunc {
 	return func(c *gin.Context) {
-		// 生成请求ID
-		requestID := fmt.Sprintf("%d", time.Now().UnixNano())
+		// 检查请求中是否已存在request_id，如果不存在则生成新的UUID
+		requestID := c.GetHeader("X-Request-ID")
+		if requestID == "" {
+			requestID = uuid.NewString()
+		}
+
+		// 将request_id放入context中，便于后续处理使用
+		ctx := context.WithValue(c.Request.Context(), constants.RequestIDCtx{}, requestID)
+		c.Request = c.Request.WithContext(ctx)
 
 		// 创建带请求信息的日志记录器
 		ctxLogger := logger.With(
-			"request_id", requestID,
-			"path", fmt.Sprintf("%s|%s", c.Request.Method, c.Request.URL.Path),
+			constants.RequestIDKey, requestID,
+			"path", c.Request.Method+"|"+c.Request.URL.Path,
 			"query", c.Request.URL.RawQuery,
 		)
 
