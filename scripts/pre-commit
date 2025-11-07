@@ -1,0 +1,40 @@
+#!/bin/bash
+
+# Git pre-commit hook to run linting before each commit
+# To install: 
+#   chmod +x scripts/pre-commit
+#   ln -s ../../scripts/pre-commit .git/hooks/pre-commit
+
+echo "Running pre-commit checks..."
+
+# Check if golangci-lint is installed
+if ! command -v golangci-lint &> /dev/null
+then
+    echo "golangci-lint could not be found"
+    echo "Installing golangci-lint..."
+    go install github.com/golangci/golangci-lint/cmd/golangci-lint@latest
+fi
+
+# Get the list of staged Go files
+STAGED_FILES=$(git diff --cached --name-only --diff-filter=ACMR | grep "\.go$" 2>/dev/null || true)
+
+# If there are no staged go files, skip linting
+if [[ -z "$STAGED_FILES" ]]; then
+    echo "No Go files staged, skipping linting"
+    exit 0
+fi
+
+echo "Linting staged files..."
+# Run golangci-lint on staged files
+golangci-lint run
+
+# Check the result
+if [ $? -ne 0 ]; then
+    echo ""
+    echo "Linting failed. Please fix the issues before committing."
+    echo "You can bypass this check with: git commit --no-verify"
+    exit 1
+fi
+
+echo "All checks passed!"
+exit 0

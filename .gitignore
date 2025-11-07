@@ -20,7 +20,9 @@
 
 # Go workspace file
 go.work
-go.work.sum
+
+# golangci-lint local config
+.golangci.local.yml
 
 # env file
 .env

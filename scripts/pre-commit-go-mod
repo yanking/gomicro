@@ -1,0 +1,25 @@
+#!/bin/bash
+
+# Additional pre-commit hook to check go.mod and go.sum consistency
+
+echo "Checking go.mod and go.sum consistency..."
+
+# Check if go.mod or go.sum is staged
+if git diff --cached --name-only | grep -E '^(go.mod|go.sum)$' > /dev/null; then
+    echo "Verifying go.mod and go.sum..."
+    
+    # Run go mod tidy to ensure consistency
+    go mod tidy
+    
+    # Check if anything changed after go mod tidy
+    if ! git diff --quiet go.mod go.sum; then
+        echo "go.mod or go.sum is not tidy. Please run 'go mod tidy' and stage the changes."
+        echo "You can bypass this check with: git commit --no-verify"
+        exit 1
+    fi
+    
+    # Add any changes made by go mod tidy
+    git add go.mod go.sum
+fi
+
+exit 0

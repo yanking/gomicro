@@ -1,0 +1,120 @@
+# Options for analysis running.
+run:
+  # Timeout for analysis.
+  timeout: 5m
+
+  # Include test files or not.
+  tests: true
+
+# Output configuration options.
+output:
+  # Sort results by: filepath, line, column.
+  sort-results: true
+
+linters-settings:
+  # Settings for specific linters
+  errcheck:
+    # Report about not checking of errors in type assertions: `a := b.(MyStruct)`.
+    check-type-assertions: false
+
+  gocyclo:
+    # Minimal cyclomatic complexity to report.
+    min-complexity: 15
+
+  dupl:
+    # Tokens count to trigger issue.
+    threshold: 100
+
+  goconst:
+    # Minimal length of string constant.
+    min-len: 2
+    # Minimum occurrences of constant string count to trigger issue.
+    min-occurrences: 2
+
+  lll:
+    # Max line length, lines longer will be reported.
+    line-length: 140
+
+  unused:
+    # Mark code as used when it's called by external programs.
+    check-exported: false
+
+  unparam:
+    # Inspect exported functions.
+    check-exported: false
+
+  nakedret:
+    # Make an issue if func has more lines of code than this setting, and it has naked returns.
+    max-func-lines: 30
+
+linters:
+  # Enable specific linter
+  # https://golangci-lint.run/usage/linters/#enabled-by-default
+  enable:
+    - errcheck      # Errcheck is a program for checking for unchecked errors in go programs.
+    - gosimple      # Linter for Go source code that specializes in simplifying code.
+    - govet         # Vet examines Go source code and reports suspicious constructs.
+    - ineffassign   # Detects when assignments to existing variables are not used.
+    - staticcheck   # Staticcheck is a go vet on steroids, applying a ton of static analysis checks.
+    - typecheck     # Like go vet, but also checks type assertions.
+    - unused        # Checks for unused constants, variables, functions and types.
+    - gocyclo       # Computes and checks the cyclomatic complexity of functions.
+    - gosec         # Inspects source code for security problems.
+    - gosimple      # Linter for Go source code that specializes in simplifying code.
+    - gofmt         # Gofmt checks whether code was gofmt-ed.
+    - goimports     # Goimports does everything that gofmt does. Additionally it checks unused imports.
+    - misspell      # Finds commonly misspelled English words in comments.
+    - lll           # Reports long lines.
+    - unconvert     # Remove unnecessary type conversions.
+    - revive        # Fast, configurable, extensible, flexible, and beautiful linter for Go.
+    - unparam       # Reports unused function parameters.
+    - dogsled       # Checks assignments with too many blank identifiers (e.g. x, _, _, _, := f())
+    - nakedret      # Finds naked returns in functions greater than a specified function length.
+    - prealloc      # Finds slice declarations that could potentially be preallocated.
+    - dupl          # Tool for code clone detection.
+
+  # Disable specific linter
+  disable:
+    - deadcode      # Finds unused code. Deprecated, replaced by unused.
+    - structcheck   # Finds unused struct fields. Deprecated, replaced by unused.
+    - varcheck      # Finds unused global variables and constants. Deprecated, replaced by unused.
+    - scopelint     # Scopelint checks for unpinned variables in go programs. Deprecated, replaced by exportloopref.
+
+issues:
+  # Maximum count of issues to exit with non-zero code.
+  max-issues-per-linter: 0
+  
+  # Maximum count of issues to exit with non-zero code.
+  max-same-issues: 0
+
+  # Excluding configuration per-path, per-linter, per-text and per-source
+  exclude-rules:
+    # Exclude some linters from running on tests files.
+    - path: _test\.go
+      linters:
+        - gocyclo
+        - errcheck
+        - dupl
+        - gosec
+        - lll
+
+    # Exclude known linters from partially hard-vendored code,
+    # which is impossible to exclude via "nolint" comments.
+    - path: internal/hmac/
+      text: "weak cryptographic primitive"
+      linters:
+        - gosec
+
+    # Exclude some staticcheck messages.
+    - linters:
+        - staticcheck
+      text: "SA1019:"
+
+    # Exclude lll issues for long lines with go:generate
+    - linters:
+        - lll
+      source: "^//go:generate "
+
+  # Independently of option `exclude` we use default exclude patterns.
+  # They exclude commonly known false positives.
+  exclude-use-default: false
