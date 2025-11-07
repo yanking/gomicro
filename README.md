@@ -5,9 +5,11 @@ A Go project with multiple MySQL instance support.
 ## Features
 
 - Multiple MySQL instance support
+- Multiple Redis instance support
 - Configuration management
 - Linting with golangci-lint
 - Git pre-commit hooks
+- HTTP transport layer based on Gin
 
 ## Installation
 
@@ -47,6 +49,12 @@ The hook will run automatically before each commit and will prevent the commit i
 git commit --no-verify
 ```
 
+## Transport Layer
+
+The project includes an HTTP transport layer based on the Gin framework:
+
+- [HTTP Transport Documentation](pkg/transport/http/README.md)
+
 ## Usage
 
 Examples of how to use the various components can be found in the `examples/` directory.
@@ -54,5 +62,7 @@ Examples of how to use the various components can be found in the `examples/` di
 ## Documentation
 
 - [MySQL Multi-instance Usage](pkg/client/database/README.md)
+- [Redis Multi-instance Usage](pkg/client/database/README.md)
+- [HTTP Transport Usage](pkg/transport/http/README.md)
 - [Configuration Management](pkg/conf/README.md)
 - [Linting Guide](docs/linting.md)
