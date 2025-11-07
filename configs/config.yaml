@@ -1,0 +1,18 @@
+#  mysql
+mysql:
+  - instance: "default"
+    addr: "localhost:3306"
+    username: "root"
+    password: "root"
+    database: "aidoggy"
+    maxIdleConnections: 10
+    maxOpenConnections: 100
+    maxConnectionLifeTime: "30m"
+  - instance: "analytics"
+    addr: "localhost:3306"
+    username: "root"
+    password: "root"
+    database: "analytics_db"
+    maxIdleConnections: 5
+    maxOpenConnections: 50
+    maxConnectionLifeTime: "15m"
