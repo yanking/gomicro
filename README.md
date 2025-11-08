@@ -10,6 +10,7 @@ A Go project with multiple MySQL instance support.
 - Linting with golangci-lint
 - Git pre-commit hooks
 - HTTP transport layer based on Gin
+- API Documentation with Swagger
 
 ## Installation
 
@@ -54,6 +55,40 @@ git commit --no-verify
 The project includes an HTTP transport layer based on the Gin framework:
 
 - [HTTP Transport Documentation](pkg/transport/http/README.md)
+
+## API Documentation
+
+This project uses Swagger for API documentation. The documentation is located in `docs/swagger/swagger.json`.
+
+### Initializing Swagger Documentation
+
+```bash
+make swagger-init
+```
+
+This command creates the swagger documentation directory and ensures it exists.
+
+### Generating Swagger Documentation
+
+```bash
+make swagger-generate
+```
+
+This command automatically generates Swagger documentation from source code annotations. The documentation is generated from the example files in the `examples/` directory.
+
+### Validating Swagger Documentation
+
+```bash
+make swagger-validate
+```
+
+### Serving Swagger UI
+
+```bash
+make swagger-serve
+```
+
+After running this command, open your browser and navigate to `http://localhost:63150/docs` to view the interactive API documentation.
 
 ## Usage
 

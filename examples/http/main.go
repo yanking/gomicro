@@ -1,3 +1,18 @@
+// Package main HTTP API.
+//
+// the purpose of this application is to provide an HTTP API for our GoMicro service
+//
+//     Schemes: http
+//     Host: localhost:8080
+//     Version: 1.0.0
+//
+//     Consumes:
+//     - application/json
+//
+//     Produces:
+//     - application/json
+//
+// swagger:meta
 package main
 
 import (
@@ -13,6 +28,42 @@ import (
 	"github.com/yanking/gomicro/pkg/transport/rest"
 	"github.com/yanking/gomicro/pkg/transport/rest/middlewares"
 )
+
+// Response represents a generic response.
+// swagger:response response
+type Response struct {
+	// The message
+	// in: body
+	Message string `json:"message"`
+}
+
+// HealthResponse represents a health check response.
+// swagger:response healthResponse
+type HealthResponse struct {
+	// The status
+	// in: body
+	Status string `json:"status"`
+	// The server name
+	// in: body
+	Server string `json:"server"`
+}
+
+// ErrorResponse represents an error response.
+// swagger:response ErrorResponse
+type ErrorResponse struct {
+	// The error message
+	// in: body
+	Error string `json:"error"`
+}
+
+// EchoRequest represents an echo request.
+// swagger:parameters echoRequest
+type EchoRequest struct {
+	// The data to echo
+	// in: body
+	// required: true
+	Data map[string]interface{} `json:"data"`
+}
 
 func main() {
 	// 创建日志记录器
@@ -32,13 +83,24 @@ func main() {
 	server.Use(middlewares.Cors)
 	server.Use(middlewares.Context(logger))
 
-	// 注册路由
+	// swagger:route GET / root
+	//
+	// Returns a welcome message.
+	//
+	// Responses:
+	//   200: response
 	server.GET("/", func(c *gin.Context) {
 		c.JSON(http.StatusOK, gin.H{
 			"message": "Hello, GoMicro HTTP Server!",
 		})
 	})
 
+	// swagger:route GET /healthz health
+	//
+	// Returns health status.
+	//
+	// Responses:
+	//   200: healthResponse
 	server.GET("/healthz", func(c *gin.Context) {
 		c.JSON(http.StatusOK, gin.H{
 			"status": "ok",
@@ -46,6 +108,13 @@ func main() {
 		})
 	})
 
+	// swagger:route POST /echo echo
+	//
+	// Echoes the request data.
+	//
+	// Responses:
+	//   200: response
+	//   400: ErrorResponse
 	server.POST("/echo", func(c *gin.Context) {
 		var req map[string]interface{}
 		if err := c.ShouldBindJSON(&req); err != nil {
