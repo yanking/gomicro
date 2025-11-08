@@ -62,3 +62,23 @@ kafka:
       groupID: "my-consumer-group"
       offsetInitial: -1  # -1 for newest, -2 for oldest
       timeout: "250ms"
+
+# asynq
+asynq:
+  - instance: "default"
+    redis_addr: "localhost:6379"
+    redis_db: 0
+    redis_username: ""
+    redis_password: ""
+    concurrency: 10
+    queues:
+      critical: 6
+      default: 3
+      low: 1
+  - instance: "scheduler"
+    redis_addr: "localhost:6379"
+    redis_db: 0
+    redis_username: ""
+    redis_password: ""
+    scheduler_opts:
+      location: "Local"

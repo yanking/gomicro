@@ -11,6 +11,7 @@ A Go project with multiple MySQL instance support.
 - Git pre-commit hooks
 - HTTP transport layer based on Gin
 - API Documentation with Swagger
+- Asynq task queue support
 
 ## Installation
 
@@ -56,6 +57,12 @@ The project includes an HTTP transport layer based on the Gin framework:
 
 - [HTTP Transport Documentation](pkg/transport/http/README.md)
 
+## Message Queue
+
+The project includes support for Asynq, a simple, reliable, and efficient distributed task queue for Go. Asynq uses Redis as a message broker and supports Redis in standalone, cluster, and sentinel modes.
+
+- [Asynq Client Documentation](pkg/client/mq/README.md)
+
 ## API Documentation
 
 This project uses Swagger for API documentation. The documentation is located in `docs/swagger/swagger.json`.
@@ -98,6 +105,7 @@ Examples of how to use the various components can be found in the `examples/` di
 
 - [MySQL Multi-instance Usage](pkg/client/database/README.md)
 - [Redis Multi-instance Usage](pkg/client/database/README.md)
+- [Asynq Task Queue Usage](pkg/client/mq/README.md)
 - [HTTP Transport Usage](pkg/transport/http/README.md)
 - [Configuration Management](pkg/conf/README.md)
 - [Linting Guide](docs/linting.md)

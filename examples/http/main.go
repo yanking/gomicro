@@ -2,15 +2,15 @@
 //
 // the purpose of this application is to provide an HTTP API for our GoMicro service
 //
-//     Schemes: http
-//     Host: localhost:8080
-//     Version: 1.0.0
+//	Schemes: http
+//	Host: localhost:8080
+//	Version: 1.0.0
 //
-//     Consumes:
-//     - application/json
+//	Consumes:
+//	- application/json
 //
-//     Produces:
-//     - application/json
+//	Produces:
+//	- application/json
 //
 // swagger:meta
 package main
