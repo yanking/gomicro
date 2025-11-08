@@ -46,3 +46,19 @@ mongodb:
     uri: "mongodb://localhost:27018"
     connectTimeout: "10s"
     maxPoolSize: 5
+
+# kafka
+kafka:
+  - instance: "default"
+    brokers:
+      - "localhost:9092"
+    version: "2.1.0"
+    producer:
+      maxRetries: 3
+      retryBackoff: "100ms"
+      requiredAcks: 1
+      timeout: "10s"
+    consumer:
+      groupID: "my-consumer-group"
+      offsetInitial: -1  # -1 for newest, -2 for oldest
+      timeout: "250ms"
