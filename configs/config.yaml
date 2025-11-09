@@ -82,3 +82,10 @@ asynq:
     redis_password: ""
     scheduler_opts:
       location: "Local"
+
+# logger
+logger:
+  level: "debug"
+  format: "text"
+  add_source: true
+  auto_detect_base_path: true
