@@ -1,0 +1,20 @@
+server:
+  host: "localhost"
+  port: "8080"
+
+log:
+  level: "debug"
+  format: "text"
+  add_source: true
+  auto_detect_base_path: true
+
+database:
+  - instance: "default"
+    driver: "memory"
+    host: ""
+    port: ""
+    username: ""
+    password: ""
+    name: ""
+    uri: ""
+    database: ""

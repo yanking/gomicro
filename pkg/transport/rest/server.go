@@ -40,6 +40,10 @@ type Server struct {
 
 // NewServer 创建一个新的HTTP服务器实例
 func NewServer(logger *slog.Logger, opts ...ServerOption) *Server {
+	if logger == nil {
+		logger = slog.Default()
+	}
+
 	srv := &Server{
 		Engine:          gin.New(), // 使用New而不是Default，提供更灵活的中间件控制
 		addr:            ":8080",
