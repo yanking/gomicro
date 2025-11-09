@@ -1,4 +1,4 @@
-# Asynq Client
+# Asynq 客户端
 
 Asynq 是一个 Go 语言编写的简单、可靠、高效的分布式任务队列库，使用 Redis 作为消息代理。
 

@@ -1,23 +1,23 @@
-# Internal Packages
+# 内部包
 
-This directory contains the internal packages of the application. These packages are not intended to be used by external applications.
+此目录包含应用程序的内部包。这些包不打算供外部应用程序使用。
 
-## Structure
+## 目录结构
 
-- `config/` - Configuration management
-- `handler/` - HTTP handlers
-- `service/` - Business logic services
-- `repository/` - Data access layer
-- `model/` - Domain models
-- `server/` - HTTP server setup
-- `logger/` - Logging utilities
-- `middleware/` - HTTP middleware
-- `utils/` - Utility functions
+- `config/` - 配置管理
+- `handler/` - HTTP 处理程序
+- `service/` - 业务逻辑服务
+- `repository/` - 数据访问层
+- `model/` - 领域模型
+- `server/` - HTTP 服务器设置
+- `logger/` - 日志工具
+- `middleware/` - HTTP 中间件
+- `utils/` - 工具函数
 
-## Package Organization
+## 包组织
 
-Each package should follow the single responsibility principle and have a clear purpose. Packages should not have circular dependencies.
+每个包应遵循单一职责原则，并具有明确的目的。包之间不应存在循环依赖。
 
-## Dependency Injection
+## 依赖注入
 
-Dependencies between packages should be injected through interfaces to promote loose coupling and testability.
+包之间的依赖应通过接口注入，以促进松耦合和可测试性。

@@ -1,91 +1,91 @@
-# Architecture Documentation
+# 架构文档
 
-This directory contains architecture documentation for the project.
+此目录包含项目的架构文档。
 
-## Microservice Architecture
+## 微服务架构
 
-This project follows a microservice architecture pattern with the following characteristics:
+本项目遵循微服务架构模式，具有以下特点：
 
-### 1. Service Structure
-- Each service is independently deployable
-- Services communicate through well-defined APIs
-- Services are organized around business capabilities
+### 1. 服务结构
+- 每个服务都是独立可部署的
+- 服务通过明确定义的API进行通信
+- 服务围绕业务能力进行组织
 
-### 2. Data Management
-- Each service has its own database
-- Data consistency is managed through eventual consistency patterns
-- Shared databases are avoided
+### 2. 数据管理
+- 每个服务都有自己的数据库
+- 数据一致性通过最终一致性模式进行管理
+- 避免共享数据库
 
-### 3. Communication Patterns
-- Synchronous communication through REST/gRPC
-- Asynchronous communication through message queues
-- Service discovery for dynamic service locations
+### 3. 通信模式
+- 通过REST/gRPC进行同步通信
+- 通过消息队列进行异步通信
+- 通过服务发现实现动态服务定位
 
-### 4. Observability
-- Distributed tracing for request flow
-- Centralized logging
-- Metrics collection and monitoring
+### 4. 可观测性
+- 通过分布式追踪实现请求流跟踪
+- 集中化日志记录
+- 指标收集和监控
 
-## Deployment Architecture
+## 部署架构
 
-### Containerization
-- Services are packaged as Docker containers
-- Container images are built using multi-stage builds
-- Images are stored in a container registry
+### 容器化
+- 服务被打包为Docker容器
+- 使用多阶段构建创建容器镜像
+- 镜像存储在容器注册表中
 
-### Orchestration
-- Kubernetes is used for container orchestration
-- Services are deployed as Kubernetes deployments
-- Services are exposed through Kubernetes services
+### 编排
+- 使用Kubernetes进行容器编排
+- 服务部署为Kubernetes部署对象
+- 服务通过Kubernetes服务暴露
 
-### Configuration Management
-- Configuration is externalized
-- Environment-specific configuration is managed through ConfigMaps and Secrets
-- Configuration changes do not require code changes
+### 配置管理
+- 配置外部化
+- 环境特定的配置通过ConfigMap和Secret进行管理
+- 配置更改不需要代码更改
 
-## Technology Stack
+## 技术栈
 
-### Languages and Frameworks
-- Go for backend services
-- Gin for REST APIs
-- gRPC for service-to-service communication
+### 语言和框架
+- Go用于后端服务
+- Gin用于REST API
+- gRPC用于服务间通信
 
-### Data Storage
-- MySQL for relational data
-- Redis for caching
-- MongoDB for document storage
+### 数据存储
+- MySQL用于关系型数据
+- Redis用于缓存
+- MongoDB用于文档存储
 
-### Messaging
-- Kafka for event streaming
-- Asynq for task queues
+### 消息传递
+- Kafka用于事件流处理
+- Asynq用于任务队列
 
-### Infrastructure
-- Docker for containerization
-- Kubernetes for orchestration
-- Prometheus for monitoring
-- Grafana for visualization
-- ELK stack for logging
+### 基础设施
+- Docker用于容器化
+- Kubernetes用于编排
+- Prometheus用于监控
+- Grafana用于可视化
+- ELK栈用于日志记录
 
-## Best Practices
+## 最佳实践
 
-### Code Organization
-- Follow the Standard Go Project Layout
-- Use internal packages for private code
-- Separate concerns with clear package boundaries
+### 代码组织
+- 遵循标准Go项目布局
+- 使用internal包存放私有代码
+- 通过清晰的包边界分离关注点
 
-### Testing
-- Unit tests for business logic
-- Integration tests for service interactions
-- End-to-end tests for critical user flows
+### 测试
+- 业务逻辑的单元测试
+- 服务交互的集成测试
+- 关键用户流程的端到端测试
 
-### Security
-- Use TLS for service communication
-- Implement authentication and authorization
-- Regularly update dependencies
-- Follow security best practices for each technology
+### 安全
+- 使用TLS进行服务通信
+- 实现身份验证和授权
+- 定期更新依赖项
+- 遵循每种技术的安全最佳实践
 
-### Monitoring and Observability
-- Instrument services with metrics
-- Implement structured logging
-- Use distributed tracing
-- Set up alerting for critical metrics
+### 监控和可观察性
+- 使用指标对服务进行仪表化
+- 实现结构化日志记录
+- 使用分布式追踪
+- 为关键指标设置告警

@@ -1,112 +1,112 @@
-# Repository Layer Design
+# Repository 层设计
 
-The repository layer in this service is designed to be replaceable, allowing different data storage implementations to be used without changing the business logic.
+本服务中的 repository 层被设计为可替换的，允许使用不同的数据存储实现而无需更改业务逻辑。
 
-## Architecture
+## 架构
 
-The repository layer follows a classic interface-implementation pattern:
+repository 层遵循经典的接口-实现模式：
 
-1. **Interface**: Defined in `internal/repository/order.go`
-2. **Implementations**:
-   - In-memory storage: `internal/repository/order.go`
-   - MySQL storage: `internal/repository/mysql/order.go`
-   - MongoDB storage: `internal/repository/mongo/order.go`
+1. **接口**: 定义在 `internal/repository/order.go`
+2. **实现**:
+   - 内存存储: `internal/repository/order.go`
+   - MySQL 存储: `internal/repository/mysql/order.go`
+   - MongoDB 存储: `internal/repository/mongo/order.go`
 
-## Interface Design
+## 接口设计
 
-The `OrderRepository` interface defines all the operations that can be performed on orders:
+`OrderRepository` 接口定义了可以在订单上执行的所有操作：
 
 ```go
 type OrderRepository interface {
-    // Save saves an order.
+    // Save 保存订单
     Save(order *model.Order) error
 
-    // FindByID finds an order by ID.
+    // FindByID 根据 ID 查找订单
     FindByID(id string) (*model.Order, error)
 
-    // FindByUserID finds orders by user ID.
+    // FindByUserID 根据用户 ID 查找订单
     FindByUserID(userID string) ([]*model.Order, error)
 
-    // Update updates an order.
+    // Update 更新订单
     Update(order *model.Order) error
 
-    // Delete deletes an order by ID.
+    // Delete 根据 ID 删除订单
     Delete(id string) error
 }
 ```
 
-## Implementation Details
+## 实现详情
 
-### In-Memory Repository
+### 内存 Repository
 
-The in-memory implementation is useful for:
-- Development and testing
-- Simple use cases with low data volume
-- Prototyping
+内存实现实用于：
+- 开发和测试
+- 数据量较小的简单用例
+- 原型开发
 
-It uses a map to store orders and a read-write mutex to ensure thread safety.
+它使用 map 来存储订单，并使用读写互斥锁来确保线程安全。
 
 ### MySQL Repository
 
-The MySQL implementation provides:
-- Persistent storage
-- ACID compliance
-- Scalability
+MySQL 实现提供：
+- 持久化存储
+- ACID 合规性
+- 可扩展性
 
-Key features:
-- Uses prepared statements to prevent SQL injection
-- Handles JSON serialization for the items array
-- Implements upsert functionality for Save operation
-- Proper error handling and wrapping
+主要特性：
+- 使用预处理语句防止 SQL 注入
+- 处理项目数组的 JSON 序列化
+- 为 Save 操作实现 upsert 功能
+- 适当的错误处理和包装
 
 ### MongoDB Repository
 
-The MongoDB implementation offers:
-- Document-based storage
-- Flexible schema
-- Horizontal scaling
+MongoDB 实现提供：
+- 基于文档的存储
+- 灵活的模式
+- 水平扩展
 
-Key features:
-- Uses MongoDB's native upsert functionality
-- Leverages BSON for data serialization
-- Implements proper context handling with timeouts
-- Handles MongoDB-specific error cases
+主要特性：
+- 使用 MongoDB 的原生 upsert 功能
+- 利用 BSON 进行数据序列化
+- 实现带超时的适当上下文处理
+- 处理 MongoDB 特定的错误情况
 
-## Switching Between Implementations
+## 在实现之间切换
 
-The repository implementation is selected in `internal/server/server.go` based on the configuration:
+repository 实现基于配置在 `internal/server/server.go` 中选择：
 
 ```go
 var repo repository.OrderRepository
 switch cfg.Database.Driver {
 case "mysql":
-    // Initialize MySQL repository
+    // 初始化 MySQL repository
     // repo = mysql.NewMySQLRepository(db)
     repo = repository.NewInMemoryOrderRepository()
 case "mongo":
-    // Initialize MongoDB repository
+    // 初始化 MongoDB repository
     // repo = mongo.NewMongoRepository(collection)
     repo = repository.NewInMemoryOrderRepository()
 default:
-    // Default to in-memory repository
+    // 默认使用内存 repository
     repo = repository.NewInMemoryOrderRepository()
 }
 ```
 
-Currently, the code is commented out for actual MySQL and MongoDB implementations, and uses the in-memory repository for demonstration purposes.
+目前，实际的 MySQL 和 MongoDB 实现代码被注释掉了，使用内存 repository 作为演示用途。
 
-## Extending to Other Databases
+## 扩展到其他数据库
 
-To add support for other databases:
+要添加对其他数据库的支持：
 
-1. Create a new package under `internal/repository/` (e.g., `postgresql`)
-2. Implement the `OrderRepository` interface
-3. Update the switch statement in `internal/server/server.go` to handle the new driver type
+1. 在 `internal/repository/` 下创建新包（例如，`postgresql`）
+2. 实现 `OrderRepository` 接口
+3. 更新 `internal/server/server.go` 中的 switch 语句以处理新的驱动类型
 
-## Best Practices
+## 最佳实践
 
-1. **Interface Segregation**: The repository interface is focused only on order operations
-2. **Dependency Inversion**: Business logic depends on the interface, not concrete implementations
-3. **Error Handling**: All implementations wrap errors with context for better debugging
-4. **Thread Safety**: Implementations ensure thread safety where needed
-5. **Resource Management**: Properly manage database connections and cursors
+1. **接口隔离**: repository 接口仅专注于订单操作
+2. **依赖倒置**: 业务逻辑依赖于接口，而不是具体实现
+3. **错误处理**: 所有实现都用上下文包装错误以便更好地调试
+4. **线程安全**: 实现在需要时确保线程安全
+5. **资源管理**: 正确管理数据库连接和游标

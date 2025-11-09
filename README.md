@@ -1,111 +1,111 @@
 # GoMicro
 
-A Go project with multiple MySQL instance support.
+一个支持多 MySQL 实例的 Go 项目。
 
-## Features
+## 功能特性
 
-- Multiple MySQL instance support
-- Multiple Redis instance support
-- Configuration management
-- Linting with golangci-lint
-- Git pre-commit hooks
-- HTTP transport layer based on Gin
-- API Documentation with Swagger
-- Asynq task queue support
+- 支持多 MySQL 实例
+- 支持多 Redis 实例
+- 配置管理
+- 使用 golangci-lint 进行代码检查
+- Git pre-commit 钩子
+- 基于 Gin 的 HTTP 传输层
+- 使用 Swagger 进行 API 文档管理
+- Asynq 任务队列支持
 
-## Installation
+## 安装
 
 ```bash
 go mod tidy
 ```
 
-## Configuration
+## 配置
 
-Configuration files are located in the `configs/` directory. The project supports multiple MySQL instances as defined in the configuration.
+配置文件位于 `configs/` 目录中。项目支持配置中定义的多 MySQL 实例。
 
-## Linting
+## 代码检查
 
-This project uses golangci-lint for code quality checks.
+本项目使用 golangci-lint 进行代码质量检查。
 
-### Running linting manually
+### 手动运行代码检查
 
 ```bash
-# Using the provided script
+# 使用提供的脚本
 ./scripts/lint.sh
 
-# Or directly
+# 或者直接运行
 golangci-lint run ./...
 ```
 
-### Git pre-commit hooks
+### Git pre-commit 钩子
 
-The project includes a pre-commit hook that automatically runs linting before each commit. To install the hooks:
+项目包含一个在每次提交前自动运行代码检查的 pre-commit 钩子。安装钩子：
 
 ```bash
 ./scripts/install-hooks.sh
 ```
 
-The hook will run automatically before each commit and will prevent the commit if linting fails. To bypass the check (not recommended), use:
+钩子会在每次提交前自动运行，如果代码检查失败将阻止提交。要绕过检查（不推荐），使用：
 
 ```bash
 git commit --no-verify
 ```
 
-## Transport Layer
+## 传输层
 
-The project includes an HTTP transport layer based on the Gin framework:
+项目包含基于 Gin 框架的 HTTP 传输层：
 
-- [HTTP Transport Documentation](pkg/transport/http/README.md)
+- [HTTP 传输层文档](pkg/transport/rest/README.md)
 
-## Message Queue
+## 消息队列
 
-The project includes support for Asynq, a simple, reliable, and efficient distributed task queue for Go. Asynq uses Redis as a message broker and supports Redis in standalone, cluster, and sentinel modes.
+项目包含对 Asynq 的支持，Asynq 是一个简单、可靠且高效的 Go 分布式任务队列。Asynq 使用 Redis 作为消息代理，支持 Redis 的单机、集群和哨兵模式。
 
-- [Asynq Client Documentation](pkg/client/mq/README.md)
+- [Asynq 客户端文档](pkg/client/mq/README.md)
 
-## API Documentation
+## API 文档
 
-This project uses Swagger for API documentation. The documentation is located in `docs/swagger/swagger.json`.
+本项目使用 Swagger 进行 API 文档管理。文档位于 `docs/swagger/swagger.json`。
 
-### Initializing Swagger Documentation
+### 初始化 Swagger 文档
 
 ```bash
 make swagger-init
 ```
 
-This command creates the swagger documentation directory and ensures it exists.
+此命令创建 swagger 文档目录并确保其存在。
 
-### Generating Swagger Documentation
+### 生成 Swagger 文档
 
 ```bash
 make swagger-generate
 ```
 
-This command automatically generates Swagger documentation from source code annotations. The documentation is generated from the example files in the `examples/` directory.
+此命令从源代码注释自动生成 Swagger 文档。文档从 `examples/` 目录中的示例文件生成。
 
-### Validating Swagger Documentation
+### 验证 Swagger 文档
 
 ```bash
 make swagger-validate
 ```
 
-### Serving Swagger UI
+### 启动 Swagger UI
 
 ```bash
 make swagger-serve
 ```
 
-After running this command, open your browser and navigate to `http://localhost:63150/docs` to view the interactive API documentation.
+运行此命令后，打开浏览器并导航到 `http://localhost:63150/docs` 查看交互式 API 文档。
 
-## Usage
+## 使用方法
 
-Examples of how to use the various components can be found in the `examples/` directory.
+各种组件的使用示例可以在 `examples/` 目录中找到。
 
-## Documentation
+## 文档
 
-- [MySQL Multi-instance Usage](pkg/client/database/README.md)
-- [Redis Multi-instance Usage](pkg/client/database/README.md)
-- [Asynq Task Queue Usage](pkg/client/mq/README.md)
-- [HTTP Transport Usage](pkg/transport/http/README.md)
-- [Configuration Management](pkg/conf/README.md)
-- [Linting Guide](docs/linting.md)
+- [MySQL 多实例使用](pkg/client/database/README.md)
+- [Redis 多实例使用](pkg/client/database/README.md)
+- [Asynq 任务队列使用](pkg/client/mq/README.md)
+- [HTTP 传输层使用](pkg/transport/rest/README.md)
+- [配置管理](pkg/conf/README.md)
+- [代码检查指南](docs/linting.md)

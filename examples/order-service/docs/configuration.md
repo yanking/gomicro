@@ -1,28 +1,28 @@
-# Configuration Management
+# 配置管理
 
-The order service uses a strict configuration loading strategy. If the configuration file cannot be loaded or parsed, the service will fail to start. This ensures that the service always runs with the correct configuration.
+订单服务使用严格的配置加载策略。如果无法加载或解析配置文件，服务将无法启动。这确保了服务始终使用正确的配置运行。
 
-## Command-Line Flags
+## 命令行参数
 
-The service accepts a command-line flag to specify the configuration file path:
+服务接受一个命令行参数来指定配置文件路径：
 
 ```bash
 -config string
-    Path to the configuration file (default "./configs/config.yaml")
+    配置文件路径 (默认 "./configs/config.yaml")
 ```
 
-Example usage:
+使用示例：
 ```bash
-# Use default config file location
+# 使用默认配置文件位置
 ./order-service
 
-# Specify a custom config file location
+# 指定自定义配置文件位置
 ./order-service -config /path/to/custom/config.yaml
 ```
 
-## Configuration File Structure
+## 配置文件结构
 
-The configuration file follows this structure:
+配置文件遵循以下结构：
 
 ```yaml
 server:
@@ -50,28 +50,28 @@ database:
     database: "orderdb"
 ```
 
-### Server Configuration
+### 服务器配置
 
-The `server` section defines the HTTP server settings:
-- `port`: The port on which the server listens
-- `host`: The host address on which the server binds
+`server` 部分定义了 HTTP 服务器设置：
+- `port`: 服务器监听的端口
+- `host`: 服务器绑定的主机地址
 
-### Database Configuration
+### 数据库配置
 
-The `database` section is a list of database configurations, supporting multiple instances:
-- `instance`: The name of the database instance (e.g., "default", "mysql", "mongo")
-- `driver`: The database driver to use ("memory", "mysql", "mongo")
-- `host`: The database host (for MySQL)
-- `port`: The database port (for MySQL)
-- `username`: The database username (for MySQL)
-- `password`: The database password (for MySQL)
-- `name`: The database name (for MySQL)
-- `uri`: The connection URI (for MongoDB)
-- `database`: The database name (for MongoDB)
+`database` 部分是数据库配置列表，支持多个实例：
+- `instance`: 数据库实例名称（例如，"default", "mysql", "mongo"）
+- `driver`: 要使用的数据库驱动（"memory", "mysql", "mongo"）
+- `host`: 数据库主机（用于 MySQL）
+- `port`: 数据库端口（用于 MySQL）
+- `username`: 数据库用户名（用于 MySQL）
+- `password`: 数据库密码（用于 MySQL）
+- `name`: 数据库名称（用于 MySQL）
+- `uri`: 连接 URI（用于 MongoDB）
+- `database`: 数据库名称（用于 MongoDB）
 
-## Using Configuration in Code
+## 在代码中使用配置
 
-The configuration is loaded at startup using the `config.Load()` function:
+配置在启动时使用 `config.Load()` 函数加载：
 
 ```go
 cfg, err := config.Load(*configFile)
@@ -80,38 +80,38 @@ if err != nil {
 }
 ```
 
-To get the default database configuration:
+获取默认数据库配置：
 
 ```go
 defaultDBConfig := cfg.GetDefaultDatabaseConfig()
 ```
 
-To get a specific database instance configuration:
+获取特定数据库实例配置：
 
 ```go
 mysqlConfig := cfg.GetDatabaseConfig("mysql")
 ```
 
-## Environment Variables
+## 环境变量
 
-The service also supports environment variables through the `conf` package. Any configuration value can be overridden by setting an environment variable with the prefix `GO_KIT_` and with dots replaced by underscores.
+服务还通过 `conf` 包支持环境变量。任何配置值都可以通过设置带有 `GO_KIT_` 前缀并将点号替换为下划线的环境变量来覆盖。
 
-For example:
-- `GO_KIT_SERVER_PORT` overrides `server.port`
-- `GO_KIT_DATABASE_0_USERNAME` overrides the username of the first database instance
+例如：
+- `GO_KIT_SERVER_PORT` 覆盖 `server.port`
+- `GO_KIT_DATABASE_0_USERNAME` 覆盖第一个数据库实例的用户名
 
-## Error Handling
+## 错误处理
 
-If the configuration file cannot be loaded or parsed, the service will exit with an error message. This strict behavior ensures that the service always runs with a valid configuration.
+如果无法加载或解析配置文件，服务将退出并显示错误消息。这种严格的行为确保了服务始终使用有效的配置运行。
 
-## Best Practices
+## 最佳实践
 
-1. **Always Provide Configuration**: Ensure a valid configuration file is always available when starting the service.
+1. **始终提供配置**: 确保启动服务时始终有有效的配置文件可用。
 
-2. **Validate Configuration**: Check that all required configuration values are present and valid.
+2. **验证配置**: 检查所有必需的配置值是否存在且有效。
 
-3. **Environment-Specific Configuration**: Use different configuration files for different environments (development, staging, production).
+3. **环境特定配置**: 为不同环境（开发、预发布、生产）使用不同的配置文件。
 
-4. **Sensitive Information**: Never commit sensitive information like passwords to version control. Use environment variables or secure configuration management systems for sensitive data.
+4. **敏感信息**: 永远不要将敏感信息如密码提交到版本控制中。对敏感数据使用环境变量或安全的配置管理系统。
 
-5. **Documentation**: Keep the configuration file well-documented so that other developers understand the available options.
+5. **文档**: 保持配置文件的良好文档，以便其他开发人员了解可用选项。

@@ -1,69 +1,69 @@
-# Deployment Documentation
+# 部署文档
 
-This directory contains deployment-related files and configurations.
+此目录包含部署相关的文件和配置。
 
-## Structure
+## 目录结构
 
-- `kubernetes/` - Kubernetes manifests and configurations
-- `scripts/` - Deployment scripts and utilities
-- `helm/` - Helm charts for Kubernetes deployments
+- `kubernetes/` - Kubernetes 清单和配置
+- `scripts/` - 部署脚本和工具
+- `helm/` - 用于 Kubernetes 部署的 Helm 图表
 
-## Kubernetes Deployment
+## Kubernetes 部署
 
-### Prerequisites
-- Kubernetes cluster (v1.19+)
+### 前提条件
+- Kubernetes 集群 (v1.19+)
 - kubectl CLI
-- Helm CLI (for Helm deployments)
+- Helm CLI (用于 Helm 部署)
 
-### Deployment Steps
+### 部署步骤
 
-1. Apply the Kubernetes manifests:
+1. 应用 Kubernetes 清单:
    ```bash
    kubectl apply -f deployments/kubernetes/
    ```
 
-2. Check the status of the deployed resources:
+2. 检查部署资源的状态:
    ```bash
    kubectl get all
    ```
 
-## Helm Deployment
+## Helm 部署
 
-### Prerequisites
-- Kubernetes cluster (v1.19+)
+### 前提条件
+- Kubernetes 集群 (v1.19+)
 - Helm CLI (v3.0+)
 
-### Deployment Steps
+### 部署步骤
 
-1. Install the Helm chart:
+1. 安装 Helm 图表:
    ```bash
    helm install my-release deployments/helm/
    ```
 
-2. Check the status of the release:
+2. 检查发布状态:
    ```bash
    helm status my-release
    ```
 
-## Environment Configuration
+## 环境配置
 
-Environment-specific configurations are managed through:
-- Kubernetes ConfigMaps for non-sensitive configuration
-- Kubernetes Secrets for sensitive configuration
-- Helm values files for environment-specific overrides
+环境特定的配置通过以下方式管理:
+- Kubernetes ConfigMaps 用于非敏感配置
+- Kubernetes Secrets 用于敏感配置
+- Helm values 文件用于环境特定的覆盖配置
 
-## CI/CD Integration
+## CI/CD 集成
 
-The deployment process can be integrated with CI/CD pipelines:
+部署过程可以与 CI/CD 流水线集成:
 - GitHub Actions
 - GitLab CI
 - Jenkins
-- Other CI/CD platforms
+- 其他 CI/CD 平台
 
-## Monitoring and Logging
+## 监控和日志
 
-Deployed services should be monitored using:
-- Prometheus for metrics collection
-- Grafana for visualization
-- ELK stack for centralized logging
-- Jaeger for distributed tracing
+部署的服务应使用以下工具进行监控:
+- Prometheus 用于指标收集
+- Grafana 用于可视化
+- ELK 栈用于集中日志
+- Jaeger 用于分布式追踪

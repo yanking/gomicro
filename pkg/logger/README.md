@@ -1,36 +1,36 @@
-# Logger Package
+# 日志包
 
-The logger package provides a simple wrapper around Go's `slog` package for consistent logging across the application.
+日志包提供了对 Go 的 `slog` 包的简单封装，用于在整个应用程序中保持一致的日志记录。
 
-## Features
+## 功能特性
 
-- Easy initialization and configuration
-- Support for different log formats (text, JSON)
-- Support for different log levels 
-- Global logger access
-- Thread-safe operations
-- Uses RFC3339 time format by default
-- Optional source file and line number information
-- Optional base path trimming for source file paths
-- Automatic base path detection
+- 简单的初始化和配置
+- 支持不同的日志格式（文本、JSON）
+- 支持不同的日志级别
+- 全局日志记录器访问
+- 线程安全操作
+- 默认使用 RFC3339 时间格式
+- 可选的源文件和行号信息
+- 可选的源文件路径基础路径修剪
+- 自动基础路径检测
 
-## Usage
+## 使用方法
 
-### Basic Usage
+### 基本用法
 
 ```go
 import "github.com/yanking/gomicro/pkg/logger"
 
-// Initialize the logger with default configuration
+// 使用默认配置初始化日志记录器
 logger.Init(nil)
 
-// Use the logger directly with slog methods
+// 直接使用 slog 方法
 log := logger.Get()
-log.Info("Application started")
-log.Error("An error occurred", "error", err)
+log.Info("应用程序已启动")
+log.Error("发生错误", "error", err)
 ```
 
-### Custom Configuration
+### 自定义配置
 
 ```go
 import "github.com/yanking/gomicro/pkg/logger"
@@ -46,10 +46,10 @@ config := &logger.Config{
 
 logger.Init(config)
 log := logger.Get()
-log.Debug("Debug message")
+log.Debug("调试信息")
 ```
 
-### Direct Logger Instance
+### 直接创建日志记录器实例
 
 ```go
 import "github.com/yanking/gomicro/pkg/logger"
@@ -65,21 +65,21 @@ log.Info("Hello, world!")
 
 ## API
 
-### Functions
+### 函数
 
-- `Init(config *Config)` - Initialize the global logger
-- `Get() *slog.Logger` - Get the global logger instance
-- `DefaultConfig() *Config` - Get default configuration
+- `Init(config *Config)` - 初始化全局日志记录器
+- `Get() *slog.Logger` - 获取全局日志记录器实例
+- `DefaultConfig() *Config` - 获取默认配置
 
-### Types
+### 类型
 
-- `Config` - Logger configuration
+- `Config` - 日志记录器配置
 
-### Config Fields
+### 配置字段
 
-- `Level` - Log level (slog.Level)
-- `Format` - Log format ("text" or "json")
-- `Output` - Output writer (default: os.Stdout)
-- `AddSource` - Whether to add source file and line number
-- `BasePath` - Base path to trim from source file paths
-- `AutoDetectBasePath` - Automatically detect base path by looking for go.mod file
+- `Level` - 日志级别 (slog.Level)
+- `Format` - 日志格式 ("text" 或 "json")
+- `Output` - 输出写入器 (默认: os.Stdout)
+- `AddSource` - 是否添加源文件和行号
+- `BasePath` - 从源文件路径中修剪的基础路径
+- `AutoDetectBasePath` - 通过查找 go.mod 文件自动检测基础路径
